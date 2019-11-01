@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let categorySchema = new Schema({
-  name: String
+  categoryName: String,
 });
 
 let categories = mongoose.model('category', categorySchema);

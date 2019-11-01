@@ -8,7 +8,8 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to our DB
-mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner?retryWrites=true&w=majority`, { useNewUrlParser: true })	
+mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner?retryWrites=true&w=majority`,
+  { useNewUrlParser: true, useUnifiedTopology: true })	
   .then(() => {	
     console.info('Connected.')	
   })	
