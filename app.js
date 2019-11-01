@@ -18,15 +18,15 @@ mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mong
 
 // Routes
 let categories = require('./routes/categories');
-let products = require('./routes/orders');
-let orders = require('./routes/products');
+let orders = require('./routes/orders');
+let products = require('./routes/products');
 
-app.route('/products/:id');
-  // .delete(products.delete);
+app.route('/products/:id')
+  .delete(products.delete);
 
-app.route('/products');
-  // .post(products.post)
-  // .get(products.get);
+app.route('/products')
+  .post(products.post)
+  .get(products.get);
 
 app.route('/orders');
   // .post(orders.post)
