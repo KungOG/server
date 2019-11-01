@@ -11,6 +11,7 @@ module.exports.get = async(req, res) => {
 
 module.exports.post = async(req, res) => {
   try {
+    console.log('Du lyckades med att lägga till en produkt!')
     let oneProduct = req.body;
     let resp = await ourProducts.create(oneProduct);
     res.status(200).send(resp);
