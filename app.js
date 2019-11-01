@@ -17,19 +17,23 @@ mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mong
   });
 
 // Routes
-let  = require('./routes/');
-let  = require('./routes/');
+let  = require('./routes/categories');
+let  = require('./routes/orders');
+let  = require('./routes/products');
 
-app.route('/products/:id')
-  .delete(products.delete);
+app.route('/products/:id');
+  // .delete(products.delete);
 
-app.route('/products')
-  .post(products.post)
-  .get(products.get);
+app.route('/products');
+  // .post(products.post)
+  // .get(products.get);
 
-app.route('/orders')
-  .post(orders.post)
-  .get(orders.get);
+app.route('/orders');
+  // .post(orders.post)
+  // .get(orders.get);
+
+app.route('/categories');
+  // .get(categories.get);
 
 
 app.listen(3000, () => {
