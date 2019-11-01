@@ -1,0 +1,18 @@
+
+{
+    "name": "Thai Corner",
+    "version": "1.0.0",
+    "main": "app.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Oscar Gustafsson, Sandra Ottersten",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+      "cors": "^2.8.5",
+      "express": "^4.16.4",
+      "mongoose": "^5.4.12"
+    }
+  }
