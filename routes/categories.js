@@ -1,8 +1,8 @@
-let category = require('../models/category');
+let Category = require('../models/category');
 
 module.exports.get = async(req, res) => {
   try {
-    let outCategories = await category.find({});
+    let outCategories = await Category.find({});
     res.status(200).send(outCategories);
   } catch (err) {
     res.status(500).send(err);
