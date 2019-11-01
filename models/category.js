@@ -6,5 +6,5 @@ let categorySchema = new Schema({
   name: String
 });
 
-let category = mongoose.model('celeb', categorySchema);
-module.exports = category;
+let categories = mongoose.model('category', categorySchema);
+module.exports = categories;
