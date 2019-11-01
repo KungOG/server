@@ -7,8 +7,8 @@ let app = express();
 app.use(express.json());
 app.use(cors());
 
-// Connect to our DB 	
-mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner`, { useNewUrlParser: true })	
+// Connect to our DB
+mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner?retryWrites=true&w=majority`, { useNewUrlParser: true })	
   .then(() => {	
     console.info('Connected.')	
   })	
@@ -17,9 +17,9 @@ mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mong
   });
 
 // Routes
-let  = require('./routes/categories');
-let  = require('./routes/orders');
-let  = require('./routes/products');
+let categories = require('./routes/categories');
+let products = require('./routes/orders');
+let orders = require('./routes/products');
 
 app.route('/products/:id');
   // .delete(products.delete);
@@ -32,9 +32,8 @@ app.route('/orders');
   // .post(orders.post)
   // .get(orders.get);
 
-app.route('/categories');
-  // .get(categories.get);
-
+app.route('/categories')
+  .get(categories.get);
 
 app.listen(3000, () => {
   console.info('Server is running: 3000.')
