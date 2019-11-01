@@ -2,7 +2,6 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let schemaForOurProducts = new Schema({
-  _id: String,
   productNr: Number,
   productName: String,
   /* picture: String, */
