@@ -8,15 +8,14 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to our DB
-mongoose.connect(`mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner?retryWrites=true&w=majority`,
-  { useNewUrlParser: true, useUnifiedTopology: true })	
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {	
     console.info('Connected.')	
   })	
   .catch(err => {	
     console.error(err)	
   });
-
+  
 // Routes
 let categories = require('./routes/categories');
 let orders = require('./routes/orders');
