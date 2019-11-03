@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const PORT = process.env.PORT || 5000;
 
 let app = express();
 app.use(express.json());
@@ -36,6 +37,4 @@ app.route('/orders');
 app.route('/categories')
   .get(categories.get);
 
-app.listen(3000, () => {
-  console.info('Server is running: 3000.')
-});
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
