@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGODB_URI,
   })	
   .catch(err => {	
     console.error(err)	
-  });
+});
 
 // Routes
 let categories = require('./routes/categories');
@@ -27,8 +27,9 @@ app.route('/products/:id')
   .delete(products.delete);
 
 app.route('/products')
+  .get(products.get)
   .post(products.post)
-  .get(products.get);
+  .patch(products.patch);
 
 app.route('/orders');
   // .post(orders.post)

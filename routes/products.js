@@ -21,11 +21,12 @@ module.exports.patch = async (req, res) => {
       description: req.body.ourProducts.description,
       protein: req.body.ourProducts.protein,
       spice: req.body.ourProducts.spice,
-      ingredients: req.body.ourProducts.ingredients,
+      ingredients: req.body.ourProducts.ingredients
     }))
   } catch {
   res.status(404).send(err.stack);
 }
+
 module.exports.post = async(req, res) => {
   try {
     let oneProduct = req.body;
