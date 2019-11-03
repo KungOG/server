@@ -24,8 +24,9 @@ module.exports.patch = async (req, res) => {
       ingredients: req.body.ourProducts.ingredients
     }))
   } catch {
-  res.status(404).send(err.stack);
-}
+    res.status(404).send(err.stack);
+  }
+};
 
 module.exports.post = async(req, res) => {
   try {
@@ -39,7 +40,7 @@ module.exports.post = async(req, res) => {
 
 module.exports.delete = async (req, res) => {
   try {
-    res.status(200).send( await ourProducts.findOneAndDelete({_id: req.params.id}));
+    res.status(200).send( await ourProducts.findOneAndDelete({ _id: req.params.id }));
   } catch(err) {
     res.status(404).send(err.stack);
   }
