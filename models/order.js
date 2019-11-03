@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let ourOrderSchema = new Schema({
-  cabin: Object,
+  order: Object,
   code: String
 })
 
