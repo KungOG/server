@@ -11,12 +11,25 @@ module.exports.get = async(req, res) => {
   
 module.exports.post = async(req, res) => {
   try {
-    let oneProduct = req.body;
-    let resp = await ourProducts.create(oneProduct);
+    let theOrder = {
+      order: req.body.order,
+      code: uid(5),
+    }
+    let resp = await ourOrders.create(theOrder);
     res.status(200).send(resp);
   } catch(err) {
-    res.status(400).send(err.stack);
+    res.status(404).send(err.stack);
   }
 };
 
+function uid(len){
+  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+  let Arr = [];
+
+  for(let i=0; i<len; i++){
+    Arr.push(chars[Math.floor(Math.random()*chars.length)]);
+  }
+
+  return Arr.join('');
+};
 */
