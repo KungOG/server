@@ -15,9 +15,9 @@ module.exports.patch = async (req, res) => {
     {
       productNr: req.body.ourProducts.productNr,
       productName : req.body.ourProducts.productName,
-      price: req.body.ourProducts.price,
       /* picture: req.body.ourProducts.picture, */
       category: req.body.ourProducts.category,
+      price: req.body.ourProducts.price,
       description: req.body.ourProducts.description,
       protein: req.body.ourProducts.protein,
       spice: req.body.ourProducts.spice,
