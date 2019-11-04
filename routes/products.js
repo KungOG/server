@@ -11,17 +11,17 @@ module.exports.get = async(req, res) => {
 
 module.exports.patch = async (req, res) => {
   try {
-    res.status(200).send(await ourProducts.findOneAndUpdate({ _id : req.body.newProduct._id },
+    res.status(200).send(await ourProducts.findOneAndUpdate({ _id : req.body._id },
     {
-      productNr: req.body.newProduct.productNr,
-      productName : req.body.newProduct.productName,
-      /* picture: req.body.newProduct.picture, */
-      category: req.body.newProduct.category,
-      price: req.body.newProduct.price,
-      description: req.body.newProduct.description,
-      protein: req.body.newProduct.protein,
-      spice: req.body.newProduct.spice,
-      ingredients: req.body.newProduct.ingredients
+      productNr: req.body.productNr,
+      productName : req.body.productName,
+      /* picture: req.body.picture, */
+      category: req.body.category,
+      price: req.body.price,
+      description: req.body.description,
+      protein: req.body.protein,
+      spice: req.body.spice,
+      ingredients: req.body.ingredients
     }))
   } catch {
     res.status(404).send(err.stack);
