@@ -1,4 +1,4 @@
-/* const ourOrders = require('../models/order');
+const ourOrders = require('../models/order');
 
 module.exports.get = async(req, res) => {
   try {
@@ -32,4 +32,3 @@ function uid(len){
 
   return Arr.join('');
 };
-*/
