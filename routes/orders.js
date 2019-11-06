@@ -12,7 +12,7 @@ module.exports.get = async(req, res) => {
 module.exports.post = async(req, res) => {
   try {
     let theOrder = {
-      order: req.body.order,
+      order: req.body,
       code: uid(5),
     }
     let resp = await ourOrders.create(theOrder);
