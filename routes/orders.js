@@ -12,8 +12,8 @@ module.exports.get = async(req, res) => {
 module.exports.post = async(req, res) => {
   try {
     let theOrder = {
-      order: req.body,
-      code: uid(5),
+      orderInformation: req.body,
+      code: uid(6),
     }
     let resp = await ourOrders.create(theOrder);
     res.status(200).send(resp);
