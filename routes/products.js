@@ -21,7 +21,8 @@ module.exports.patch = async (req, res) => {
       description: req.body.description,
       protein: req.body.protein,
       spice: req.body.spice,
-      ingredients: req.body.ingredients
+      ingredients: req.body.ingredients,
+      extras: req.body.extras
     }))
   } catch {
     res.status(404).send(err.stack);

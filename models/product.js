@@ -11,6 +11,7 @@ let schemaForOurProducts = new Schema({
   protein: Array,
   spice: Boolean,
   ingredients: Array,
+  extras: Array,
 });
 
 let oneProduct = mongoose.model('product', schemaForOurProducts);
