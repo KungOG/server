@@ -6,6 +6,6 @@ let ourOrderSchema = new Schema({
   code: String
 })
 
-let Order = mongoose.model('order', ourOrderSchema);
+let Order = mongoose.model('orderInformation', ourOrderSchema);
 
 module.exports = Order;
