@@ -31,9 +31,9 @@ app.route('/products')
   .post(products.post)
   .patch(products.patch);
 
-app.route('/orders');
-  // .post(orders.post)
-  // .get(orders.get);
+app.route('/orders')
+  .post(orders.post)
+  .get(orders.get);
 
 app.route('/categories')
   .get(categories.get);
