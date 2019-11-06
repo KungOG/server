@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let ourOrderSchema = new Schema({
-  order: Object,
+  orderInformation: Object,
   code: String
 })
 
