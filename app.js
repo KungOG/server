@@ -32,9 +32,9 @@ app.route('/products')
   .post(products.post)
   .patch(products.patch);
 
-app.route('/business-hours')
+/* app.route('/business-hours')
   .get(business_hours.get)
-  .patch(business_hours.patch);
+  .patch(business_hours.patch); */
 
 app.route('/orders')
   .post(orders.post)
