@@ -6,5 +6,5 @@ let businessHourSchema = new Schema({
   closed: String,
 });
 
-let business_hours = mongoose.model('category', businessHourSchema);
+let business_hours = mongoose.model('business_hours', businessHourSchema);
 module.exports = business_hours;
