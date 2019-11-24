@@ -1,4 +1,4 @@
-let openHours = require('../models/business-hour');
+let openHours = require('../models/businessHour');
 
 module.exports.get = async(req, res) => {
   try {

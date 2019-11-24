@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI,
 let categories = require('./routes/categories');
 let orders = require('./routes/orders');
 let products = require('./routes/products');
-let business_hours = require('./routes/business-hours');
+let business_hours = require('./routes/businessHours');
 
 app.route('/products/:id')
   .delete(products.delete);
@@ -32,7 +32,7 @@ app.route('/products')
   .post(products.post)
   .patch(products.patch);
 
-app.route('/business-hours')
+app.route('/businessHours')
   .get(business_hours.get)
   .patch(business_hours.patch);
 
