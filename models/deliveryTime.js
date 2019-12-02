@@ -2,8 +2,8 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let timeToDeliverySchema = new Schema({
-  productionTime: String,
+  time: String,
 });
 
-let delivering_time = mongoose.model('delivering_time', timeToDeliverySchema);
-module.exports = delivering_time;
+let delivery_times = mongoose.model('delivery_times', timeToDeliverySchema);
+module.exports = delivery_times;
