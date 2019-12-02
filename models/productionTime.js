@@ -5,5 +5,5 @@ let productionTimeSchema = new Schema({
   productionTime: String,
 });
 
-let productionTime = mongoose.model('productionTime', productionTimeSchema);
+let productionTime = mongoose.model('productionsTime', productionTimeSchema);
 module.exports = productionTime;

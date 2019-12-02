@@ -24,7 +24,7 @@ let orders = require('./routes/orders');
 let products = require('./routes/products');
 let business_hours = require('./routes/businessHours');
 let business_status = require('./routes/statuses');
-let productionTime = require('./routes/productionsTime');
+let productionsTime = require('./routes/productionsTime');
 
 app.route('/products/:id')
   .delete(products.delete);
@@ -39,8 +39,8 @@ app.route('/businessHours')
   .patch(business_hours.patch);
 
 app.route('/productionsTime')
-  .get(productionTime.get)
-  .patch(productionTime.patch);
+  .get(productionsTime.get)
+  .patch(productionsTime.patch);
 
 app.route('/statuses')
   .get(business_status.get)
