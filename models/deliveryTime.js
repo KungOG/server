@@ -5,5 +5,5 @@ let timeToDeliverySchema = new Schema({
   productionTime: String,
 });
 
-let deliveryTime = mongoose.model('deliveryTime', timeToDeliverySchema);
-module.exports = deliveryTime;
+let delivering_time = mongoose.model('delivering_time', timeToDeliverySchema);
+module.exports = delivering_time;
