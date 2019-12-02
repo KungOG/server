@@ -38,7 +38,7 @@ app.route('/businessHours')
   .get(business_hours.get)
   .patch(business_hours.patch);
 
-app.route('/productionTime')
+app.route('/productionsTime')
   .get(productionTime.get)
   .patch(productionTime.patch);
 
