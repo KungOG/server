@@ -1,8 +1,8 @@
-let production_time = require('../models/productionTime');
+let time_to_delivery = require('../models/deliveryTime');
 
 module.exports.get = async(req, res) => {
   try {
-    let items = await production_time.find({});
+    let items = await time_to_delivery.find({});
     res.status(200).send(items);
   } catch (err) {
     res.status(500).send(err);
@@ -11,7 +11,7 @@ module.exports.get = async(req, res) => {
 
 module.exports.patch = async (req, res) => {
   try {
-    res.status(200).send(await production_time.findOneAndUpdate({ _id : req.body._id },
+    res.status(200).send(await time_to_delivery.findOneAndUpdate({ _id : req.body._id },
     {
       productionTime: req.body.productionTime,
     }))
