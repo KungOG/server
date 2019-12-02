@@ -13,7 +13,7 @@ module.exports.patch = async (req, res) => {
   try {
     res.status(200).send(await production_time.findOneAndUpdate({ _id : req.body._id },
     {
-      productionTime: req.body.status,
+      productionTime: req.body.productionTime,
     }))
   } catch {
     res.status(404).send(err.stack);
