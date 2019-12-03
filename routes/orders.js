@@ -2,10 +2,11 @@ const ourOrders = require('../models/order');
 
 module.exports.get = async(req, res) => {
   try { 
-    let items = await ourOrders.$where(() => {
-      return this.date.toDateString() === Date.now().toDateString()
-    })
+    let items = await ourOrders.find({})
     console.log(items);
+    items = items.filter((item) => {
+      return new Date(Date.parse(item.date)).toDateString() === new Date(Date.now()).toDateString()
+    })
     res.status(200).send(items);
   } catch (err) {
     res.status(500).send(err);
