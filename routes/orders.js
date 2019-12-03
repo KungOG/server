@@ -1,26 +1,10 @@
 const ourOrders = require('../models/order');
 
 module.exports.get = async(req, res) => {
-  try {
-    let items = await ourOrders.aggregate({
-      "$project": {
-        "year": {
-          "$year": "$orderInformation.time"
-        },
-        "month": {
-          "$month": "$orderInformation.time"
-        },
-        "day": {
-          "$dayOfMonth": "$orderInformation.time"
-        },
-      }
-    }, {
-        "$match": {
-          "year": Date().getFullYear(),
-          "month": Date().getMonth() + 1,
-          "day": Date().getDate(),
-        },
-    });
+  try { 
+    let items = await ourOrders.$where(() => {
+      return this.date.toDateString() === Date.now().toDateString()
+    })
     console.log(items);
     res.status(200).send(items);
   } catch (err) {
