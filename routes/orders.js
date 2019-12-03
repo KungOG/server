@@ -2,7 +2,7 @@ const ourOrders = require('../models/order');
 
 module.exports.get = async(req, res) => {
   try {
-    let items = await ourOrders.find({orderInformation: {$exists: true}});
+    let items = await ourOrders.find({"orderInformation.time": "2019-11-06T09:51:33.529Z"});
     console.log(items);
     res.status(200).send(items);
   } catch (err) {
