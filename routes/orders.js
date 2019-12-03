@@ -5,20 +5,20 @@ module.exports.get = async(req, res) => {
     let items = await ourOrders.aggregate({
       "$project": {
         "year": {
-          "$year": orderInformation.time
+          "$year": "$orderInformation.time"
         },
         "month": {
-          "$month": orderInformation.time
+          "$month": "$orderInformation.time"
         },
         "day": {
-          "$dayOfMonth": orderInformation.time
+          "$dayOfMonth": "$orderInformation.time"
         },
       }
     }, {
         "$match": {
-          "year": new.Date().getFullYear(),
-          "month": new.Date().getMonth() + 1,
-          "day": new.Date().getDate(),
+          "year": Date().getFullYear(),
+          "month": Date().getMonth() + 1,
+          "day": Date().getDate(),
         },
     });
     console.log(items);
