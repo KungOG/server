@@ -13,7 +13,8 @@ module.exports.get = async(req, res) => {
         "day": {
           "$dayOfMonth": "$time"
         },
-      }}, {
+      }
+    }, {
         "$match": {
           "year": new.Date().getFullYear(),
           "month": new.Date().getMonth() + 1,
