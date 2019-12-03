@@ -2,7 +2,7 @@ const ourOrders = require('../models/order');
 
 module.exports.get = async(req, res) => {
   try {
-    let items = await ourOrders.find({});
+    let items = await ourOrders.find({time: {"$regex: "2019""}});
     res.status(200).send(items);
   } catch (err) {
     res.status(500).send(err);
