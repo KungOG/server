@@ -3,7 +3,7 @@ let Schema = mongoose.Schema;
 
 let ourOrderSchema = new Schema({
   orderInformation: Object,
-  date: {type: Date},
+  date: {type: Date, default: Date.now},
   code: String
 })
 
