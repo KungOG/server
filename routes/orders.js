@@ -2,7 +2,24 @@ const ourOrders = require('../models/order');
 
 module.exports.get = async(req, res) => {
   try {
-    let items = await ourOrders.find({"orderInformation.time": "2019-11-06T09:51:33.529Z"});
+    let items = await ourOrders.aggregate({
+      "$project": {
+        "year": {
+          "$year": "$time"
+        },
+        "month": {
+          "$month": "$time"
+        },
+        "day": {
+          "$dayOfMonth": "$time"
+        },
+      }}, {
+        "$match": {
+          "year": new.Date().getFullYear(),
+          "month": new.Date().getMonth() + 1,
+          "day": new.Date().getDate(),
+        },
+    });
     console.log(items);
     res.status(200).send(items);
   } catch (err) {
