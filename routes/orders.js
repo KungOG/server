@@ -3,6 +3,7 @@ const ourOrders = require('../models/order');
 module.exports.get = async(req, res) => {
   try {
     let items = await ourOrders.find({orderInformation: {$exists: true}});
+    console.log(items);
     res.status(200).send(items);
   } catch (err) {
     res.status(500).send(err);
