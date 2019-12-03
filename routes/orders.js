@@ -5,13 +5,13 @@ module.exports.get = async(req, res) => {
     let items = await ourOrders.aggregate({
       "$project": {
         "year": {
-          "$year": "$orderInformation.time"
+          "$year": orderInformation.time
         },
         "month": {
-          "$month": "$orderInformation.time"
+          "$month": orderInformation.time
         },
         "day": {
-          "$dayOfMonth": "$orderInformation.time"
+          "$dayOfMonth": orderInformation.time
         },
       }
     }, {
