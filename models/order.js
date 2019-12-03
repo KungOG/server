@@ -7,7 +7,7 @@ const day = currentDate.getDate();
 
 let ourOrderSchema = new Schema({
   orderInformation: Object,
-  date: Date(year, month, day),
+  date: Date(year, month, day).toString(),
   code: String
 })
 
