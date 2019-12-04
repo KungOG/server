@@ -5,7 +5,7 @@ module.exports.get = async(req, res) => {
     let items = await ourOrders.find({})
     console.log(items);
     items = items.filter((item) => {
-      return new Date(Date.parse(item.date)).toDateString() === new Date(Date.now()).toDateString() && item.status === 0
+      return new Date(Date.parse(item.date)).toDateString() === new Date(Date.now()).toDateString() && item.status !== 3
     })
     res.status(200).send(items);
   } catch (err) {
