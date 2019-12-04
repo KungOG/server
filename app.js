@@ -49,6 +49,7 @@ app.route('/statuses')
 
 app.route('/orders')
   .post(orders.post)
+  .patch(orders.patch)
   .get(orders.get);
 
 app.route('/categories')

@@ -27,6 +27,17 @@ module.exports.post = async(req, res) => {
   }
 };
 
+module.exports.patch = async (req, res) => {
+  try {
+    res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
+    {
+      status: req.body.status,
+    }))
+  } catch {
+    res.status(404).send(err.stack);
+  }
+};
+
 function uid(len){
   let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
   let Arr = [];
