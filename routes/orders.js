@@ -28,7 +28,7 @@ module.exports.post = async(req, res) => {
 };
 
 module.exports.patch = async (req, res) => {
-  if (req.body.status === 1) {
+  if (req.body.status >= 1) {
     console.log('Inne i första status');
     try {
       res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
