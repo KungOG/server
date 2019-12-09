@@ -29,7 +29,7 @@ module.exports.post = async(req, res) => {
 
 module.exports.patch = async (req, res) => {
   if (req.body.status === 1) {
-    console.log('Inne i första status')
+    console.log('Inne i första status');
     try {
       res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
       {
@@ -39,10 +39,11 @@ module.exports.patch = async (req, res) => {
       res.status(404).send(err.stack);
     }
   } else {
+    console.log(req.body);
       try {
         res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
         {
-          orderInformation: req.body.object,
+          orderInformation: req.body.orderInformation,
         }))
       } catch {
         res.status(404).send(err.stack);
