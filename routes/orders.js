@@ -42,7 +42,7 @@ module.exports.patch = async (req, res) => {
       try {
         res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
         {
-          orderInformation: req.body.orderInformation,
+          orderInformation: req.body.object,
         }))
       } catch {
         res.status(404).send(err.stack);
