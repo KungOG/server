@@ -39,11 +39,11 @@ module.exports.patch = async (req, res) => {
       res.status(404).send(err.stack);
     }
   } else {
-    console.log('Inne och body --> ', req.body);
+    console.log('Inne och body --> ', req.body.orderInformation);
       try {
         res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
         {
-          orderInformation: req.body,
+          orderInformation: req.body.orderInformation,
         }))
       } catch {
         res.status(404).send(err.stack);
