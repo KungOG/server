@@ -28,13 +28,26 @@ module.exports.post = async(req, res) => {
 };
 
 module.exports.patch = async (req, res) => {
-  try {
-    res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
-    {
-      status: req.body.status,
-    }))
-  } catch {
-    res.status(404).send(err.stack);
+  if (req.body.status === 1) {
+    console.log('Inne i första status')
+    try {
+      res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
+      {
+        status: req.body.status,
+      }))
+    } catch {
+      res.status(404).send(err.stack);
+    }
+  } else {
+      try {
+        res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
+        {
+          orderInformation: req.body.orderInformation,
+        }))
+      } catch {
+        res.status(404).send(err.stack);
+      }
+
   }
 };
 
