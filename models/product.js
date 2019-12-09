@@ -7,6 +7,7 @@ let schemaForOurProducts = new Schema({
   /* picture: String, */
   category: Number,
   price: Number,
+  active: Boolean,
   description: String,
   protein: Array,
   spice: Boolean,

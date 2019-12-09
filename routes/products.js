@@ -10,6 +10,7 @@ module.exports.get = async(req, res) => {
 };
 
 module.exports.patch = async (req, res) => {
+
   try {
     res.status(200).send(await ourProducts.findOneAndUpdate({ _id : req.body._id },
     {
@@ -18,6 +19,7 @@ module.exports.patch = async (req, res) => {
       /* picture: req.body.picture, */
       category: req.body.category,
       price: req.body.price,
+      active: req.body.active,
       description: req.body.description,
       protein: req.body.protein,
       spice: req.body.spice,
