@@ -47,28 +47,28 @@ let business_status = require('./routes/statuses');
 let delivering_time = require('./routes/deliveryTimes');
 
 app.route('/products/:id')
-  .delete(products.delete);
+  .delete(checkJwt, products.delete);
 
 app.route('/products')
-  .get(checkJwt, products.get)
-  .post(products.post)
-  .patch(products.patch);
+  .get(products.get)
+  .post(checkJwt, products.post)
+  .patch(checkJwt, products.patch);
 
 app.route('/businessHours')
   .get(business_hours.get)
-  .patch(business_hours.patch);
+  .patch(checkJwt, business_hours.patch);
 
 app.route('/deliveryTimes')
   .get(delivering_time.get)
-  .patch(delivering_time.patch);
+  .patch(checkJwt, delivering_time.patch);
 
 app.route('/statuses')
   .get(business_status.get)
-  .patch(business_status.patch);
+  .patch(checkJwt, business_status.patch);
 
 app.route('/orders')
   .post(orders.post)
-  .patch(orders.patch)
+  .patch(checkJwt, orders.patch)
   .get(checkJwt, orders.get);
 
 app.route('/categories')
