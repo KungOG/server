@@ -5,7 +5,7 @@ module.exports.get = async(req, res) => {
     let items = await ourOrders.find({})
     console.log(items);
     items = items.filter((item) => {
-      return new Date(Date.parse(item.date)).toDateString() === new Date(Date.now()).toDateString() && item.status !== 3
+      return new Date(Date.parse(item.date)).toDateString() === new Date(Date.now()).toDateString() && item.status !== 4
     })
     res.status(200).send(items);
   } catch (err) {
@@ -28,13 +28,25 @@ module.exports.post = async(req, res) => {
 };
 
 module.exports.patch = async (req, res) => {
-  try {
-    res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
-    {
-      status: req.body.status,
-    }))
-  } catch {
-    res.status(404).send(err.stack);
+  if (req.body.status >= 1) {
+    try {
+      res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
+      {
+        status: req.body.status,
+      }))
+    } catch {
+      res.status(404).send(err.stack);
+    }
+  } else {
+      try {
+        res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
+        {
+          orderInformation: req.body.orderInformation,
+        }))
+      } catch {
+        res.status(404).send(err.stack);
+      }
+
   }
 };
 
