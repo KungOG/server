@@ -20,7 +20,7 @@ module.exports.validateCustomer = async (token) => {
       algorithm: ["RS256"]
     });
 
-    console.log(token);
+    console.log('auth--> ',token);
     return checkJwt    
   } catch(err){
     console.log('De gick ej hela vägen!');
