@@ -2,11 +2,37 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
+
 const PORT = process.env.PORT || 5000;
 
 let app = express();
 app.use(express.json());
 app.use(cors());
+app.use(jwtCheck);
+
+const authConfig = {
+  domain: "dev-6foilwku.auth0.com",
+  audience: "so-i-eat-server.herokuapp.com"
+};
+
+var jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
+}),
+  audience: authConfig.audience,
+  issuer: `https://${authConfig.domain}/`,
+  algorithms: ['RS256']
+});
+
+app.get('/authorized', function (req, res) {
+  res.send('Secured Resource');
+});
 
 // Connect to our DB
 const mnguri = "mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner?retryWrites=true&w=majority"
