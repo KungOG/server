@@ -47,7 +47,7 @@ app.route('/statuses')
   .get(business_status.get)
   .patch(business_status.patch);
 
-app.route('/orders', checkJwt)
+app.route('/orders')
   .post(orders.post)
   .patch(orders.patch)
   .get(orders.get);
