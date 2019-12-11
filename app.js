@@ -18,20 +18,22 @@ const authConfig = {
   audience: "so-i-eat-server.herokuapp.com"
 };
 
-var jwtCheck = jwt({
-  secret: jwks.expressJwtSecret({
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
     jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
-}),
+  }),
   audience: authConfig.audience,
   issuer: `https://${authConfig.domain}/`,
-  algorithms: ['RS256']
+  algorithm: ["RS256"]
 });
 
-app.get('/authorized', function (req, res) {
-  res.send('Secured Resource');
+app.get("/api/external", checkJwt, (req, res) => {
+  res.send({
+    msg: "Your Access Token was successfully validated!"
+  });
 });
 
 // Connect to our DB
