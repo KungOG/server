@@ -7,7 +7,8 @@ const authConfig = {
 
 module.exports.validateCustomer = async (token) => {
   console.log('Starting to check your Authorization');
-  try {   
+  try {
+    console.log('Trying')  
     let checkJwt = await jwt({
       secret: jwksRsa.expressJwtSecret({
         cache: true,
@@ -19,7 +20,9 @@ module.exports.validateCustomer = async (token) => {
       issuer: `https://${authConfig.domain}/`,
       algorithm: ["RS256"]
     });
-    return checkJwt;
+
+
+    return checkJwt    
   } catch(err){
     console.log('De gick ej hela vägen!');
     console.log(err.stack);
