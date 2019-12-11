@@ -2,7 +2,8 @@ const ourOrders = require('../models/order');
 let auth = require('./auth');
 
 module.exports.get = async(req, res) => {
-  if(await auth.validateCustomer(req.headers.authorization)) {
+  console.log(req.body);
+  if( await auth.validateCustomer(req.headers.authorization)) {
     try { 
       let items = await ourOrders.find({})
       console.log(items);

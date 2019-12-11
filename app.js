@@ -2,7 +2,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
 const PORT = process.env.PORT || 5000;
 
 let app = express();
@@ -48,7 +47,7 @@ app.route('/statuses')
   .get(business_status.get)
   .patch(business_status.patch);
 
-app.route('/orders')
+app.route('/orders', checkJwt)
   .post(orders.post)
   .patch(orders.patch)
   .get(orders.get);
