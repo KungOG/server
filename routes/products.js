@@ -1,5 +1,4 @@
 let ourProducts = require('../models/product');
-let auth = require('./auth');
 
 module.exports.get = async(req, res) => {
   try {
