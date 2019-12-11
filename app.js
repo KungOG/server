@@ -14,7 +14,7 @@ app.use(cors());
 
 const authConfig = {
   domain: "dev-6foilwku.auth0.com",
-  audience: "so-i-eat-server.herokuapp.com"
+  audience: "https://so-i-eat-server.herokuapp.com/"
 };
 
 const checkJwt = jwt({
