@@ -6,6 +6,7 @@ const authConfig = {
 };
 
 module.exports.validateCustomer = async (token) => {
+  console.log('Starting to check your Authorization');
   try {   
     let checkJwt = await jwt({
       secret: jwksRsa.expressJwtSecret({
@@ -19,7 +20,6 @@ module.exports.validateCustomer = async (token) => {
       algorithm: ["RS256"]
     });
     return checkJwt;
-
   } catch(err){
     console.log('De gick ej hela vägen!');
     console.log(err.stack);

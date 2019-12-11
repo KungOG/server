@@ -12,6 +12,7 @@ module.exports.get = async(req, res) => {
 
 module.exports.patch = async (req, res) => {
   if(await auth.validateCustomer(req.headers.authorization)) {
+    console.log('You have permisson');
     if(req.body.productName) {
       try {
         res.status(200).send(await ourProducts.findOneAndUpdate({ _id : req.body._id },
@@ -42,6 +43,7 @@ module.exports.patch = async (req, res) => {
       }
     }
   } else {
+    console.log('Sorry no go! --> patch');
     res.status(500).send('You do not have permission to do this.');
   }
 };
