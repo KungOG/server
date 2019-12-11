@@ -11,7 +11,7 @@ const authConfig = {
   audience: "https://so-i-eat-server.herokuapp.com/"
 };
 
-const checkJwt = await jwt({
+const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
