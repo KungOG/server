@@ -57,7 +57,12 @@ let delivering_time = require('./routes/deliveryTimes');
 app.route('/products/:id')
   .delete(products.delete);
 
-app.route('/products')
+/* app.route("/products", checkJwt, () => {
+  .get(products.get)
+  .post(products.post)
+  .patch(products.patch);
+}); */
+app.route('/products', checkJwt)
   .get(products.get)
   .post(products.post)
   .patch(products.patch);
