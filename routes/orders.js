@@ -2,11 +2,10 @@ const ourOrders = require('../models/order');
 let auth = require('./auth');
 
 module.exports.get = async(req, res) => {
-  console.log(req.body);
+  console.log(req.headers);
   if( await auth.validateCustomer(req.headers.authorization)) {
     try { 
       let items = await ourOrders.find({})
-      console.log(items);
       items = items.filter((item) => {
         return new Date(Date.parse(item.date)).toDateString() === new Date(Date.now()).toDateString() && item.status !== 4
       })

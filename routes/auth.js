@@ -6,7 +6,6 @@ const authConfig = {
 };
 
 module.exports.validateCustomer = async (token) => {
-  console.log('Starting to check your Authorization');
   try {
     console.log('Trying')  
     let checkJwt = await jwt({
