@@ -4,6 +4,25 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 
+const jwt = require('express-jwt');
+const jwksRsa = require("jwks-rsa");
+const authConfig = {
+  domain: "dev-6foilwku.auth0.com",
+  audience: "https://so-i-eat-server.herokuapp.com/"
+};
+
+let checkJwt = await jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`
+  }),
+  audience: authConfig.audience,
+  issuer: `https://${authConfig.domain}/`,
+  algorithm: ["RS256"]
+});
+
 let app = express();
 app.use(express.json());
 app.use(cors());
@@ -50,7 +69,7 @@ app.route('/statuses')
 app.route('/orders')
   .post(orders.post)
   .patch(orders.patch)
-  .get(orders.get);
+  .get(checkJwt, orders.get);
 
 app.route('/categories')
   .get(categories.get);
