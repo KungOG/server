@@ -3,15 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-var jwt = require('express-jwt');
-var jwks = require('jwks-rsa');
+const jwt = require('express-jwt');
+const jwksRsa = require("jwks-rsa");
 
 const PORT = process.env.PORT || 5000;
 
 let app = express();
 app.use(express.json());
 app.use(cors());
-app.use(jwtCheck);
 
 const authConfig = {
   domain: "dev-6foilwku.auth0.com",
