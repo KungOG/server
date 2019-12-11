@@ -20,7 +20,7 @@ const checkJwt = jwt({
   }),
   audience: authConfig.audience,
   issuer: `https://${authConfig.domain}/`,
-  algorithm: ["RS256"]
+  algorithms: ["RS256"]
 });
 
 let app = express();
@@ -50,7 +50,7 @@ app.route('/products/:id')
   .delete(products.delete);
 
 app.route('/products')
-  .get(products.get)
+  .get(checkJwt, products.get)
   .post(products.post)
   .patch(products.patch);
 
