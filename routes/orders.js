@@ -1,5 +1,4 @@
 const ourOrders = require('../models/order');
-let auth = require('./auth');
 
 module.exports.get = async(req, res) => {
   try { 
