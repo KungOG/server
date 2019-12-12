@@ -27,8 +27,7 @@ let app = express();
 app.use(express.json());
 app.use(cors());
 
-const mnguri = "mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner?retryWrites=true&w=majority"
-mongoose.connect(mnguri,
+mongoose.connect(process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true })	
   .then(() => {	
     console.info('Connected.')	
