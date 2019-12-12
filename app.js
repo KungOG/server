@@ -27,7 +27,6 @@ let app = express();
 app.use(express.json());
 app.use(cors());
 
-// Connect to our DB
 const mnguri = "mongodb+srv://FreddieBlue:xHUfwW4qQo083YAh@cluster0-hfptd.mongodb.net/thai-corner?retryWrites=true&w=majority"
 mongoose.connect(mnguri,
   { useNewUrlParser: true, useUnifiedTopology: true })	
@@ -38,7 +37,6 @@ mongoose.connect(mnguri,
     console.error(err)	
 });
 
-// Routes
 let categories = require('./routes/categories');
 let orders = require('./routes/orders');
 let products = require('./routes/products');
