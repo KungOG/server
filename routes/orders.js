@@ -27,7 +27,7 @@ module.exports.post = async(req, res) => {
 };
 
 module.exports.patch = async (req, res) => {
-  if (req.body.status >= 1) {
+  if (req.body.status) {
     try {
       res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
       {
@@ -36,7 +36,7 @@ module.exports.patch = async (req, res) => {
     } catch {
       res.status(404).send(err.stack);
     }
-  } else {
+  } else if (req.body.orderInformation) {
       try {
         res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
         {
