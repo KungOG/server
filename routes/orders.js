@@ -27,7 +27,7 @@ module.exports.post = async(req, res) => {
 };
 
 module.exports.patch = async (req, res) => {
-  if (req.body.status < 4) {
+  if (req.body.status < 5) {
     try {
       res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
       {
