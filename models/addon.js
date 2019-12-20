@@ -6,5 +6,5 @@ let menuAddonsSchema = new Schema({
   price: Number,
 });
 
-let menuAddons = mongoose.model('menuAddons', menuAddonsSchema);
+let menuAddons = mongoose.model('menu_addons', menuAddonsSchema);
 module.exports = menuAddons;
