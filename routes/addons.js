@@ -11,13 +11,10 @@ module.exports.get = async(req, res) => {
 
 module.exports.post = async(req, res) => {
   try {
-    console.log('body incoming --> ', req.body);
     let theAddon = {
       name: req.body.name,
-      price: req.body.number,
+      price: req.body.price,
     }
-
-    console.log('the addon --->', theAddon);
     let resp = await Addons.create(theAddon);
     res.status(200).send(resp);
   } catch(err) {
