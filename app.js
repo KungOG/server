@@ -53,6 +53,7 @@ let products = require('./routes/products');
 let business_hours = require('./routes/businessHours');
 let business_status = require('./routes/statuses');
 let delivering_time = require('./routes/deliveryTimes');
+let addons = require('./routes/addons');
 
 app.route('/products/:id')
   .delete(checkJwt, products.delete);
@@ -82,6 +83,9 @@ app.route('/orders')
 app.route('/categories')
   .get(categories.get);
 
+app.route('/addons')
+  .post(addons.post)
+  .get(addons.get);
 
 app.post("/create-payment-intent", async (req, res) => {
   const { items, currency } = req.body;
@@ -147,9 +151,4 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-
-
 app.listen(process.env.PORT, () => console.log(`Listening on ${ process.env.PORT }`));
-
-
-
