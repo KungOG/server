@@ -1,4 +1,4 @@
-const Addons = require('../models/businessHour');
+const Addons = require('../models/addon');
 
 module.exports.get = async(req, res) => {
   try { 
