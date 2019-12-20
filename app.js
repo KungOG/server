@@ -42,6 +42,7 @@ let products = require('./routes/products');
 let business_hours = require('./routes/businessHours');
 let business_status = require('./routes/statuses');
 let delivering_time = require('./routes/deliveryTimes');
+let addons = require('./routes/addons');
 
 app.route('/products/:id')
   .delete(checkJwt, products.delete);
@@ -70,5 +71,9 @@ app.route('/orders')
 
 app.route('/categories')
   .get(categories.get);
+
+app.route('/addons')
+  .post(addons.post)
+  .get(addons.get);
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
