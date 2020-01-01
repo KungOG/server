@@ -60,8 +60,8 @@ app.route('/products/:id')
 
 app.route('/products')
   .get(products.get)
-  .post(checkJwt, products.post)
-  .patch(checkJwt, products.patch);
+  .post(products.post)
+  .patch(products.patch);
 
 app.route('/businessHours')
   .get(business_hours.get)

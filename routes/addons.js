@@ -12,8 +12,8 @@ module.exports.get = async(req, res) => {
 module.exports.post = async(req, res) => {
   try {
     let theAddon = {
-      orderInformation: req.body.name,
-      price: req.body.number,
+      name: req.body.name,
+      price: req.body.price,
     }
     let resp = await Addons.create(theAddon);
     res.status(200).send(resp);
