@@ -4,7 +4,7 @@ let Schema = mongoose.Schema;
 let ourOrderSchema = new Schema({
   orderInformation: Object,
   status: Number,
-  date: Date,
+  date: {type: Date, default: Date.now},
   code: String
 })
 

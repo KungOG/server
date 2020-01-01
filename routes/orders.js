@@ -18,7 +18,6 @@ module.exports.post = async(req, res) => {
       orderInformation: req.body,
       code: uid(6),
       status: 0,
-      date: date(),
     }
     let resp = await ourOrders.create(theOrder);
     res.status(200).send(resp);
@@ -28,7 +27,7 @@ module.exports.post = async(req, res) => {
 };
 
 module.exports.patch = async (req, res) => {
-  if (req.body.status < 5) {
+  if (req.body.status >= 1) {
     try {
       res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
       {
@@ -37,7 +36,7 @@ module.exports.patch = async (req, res) => {
     } catch {
       res.status(404).send(err.stack);
     }
-  } else if (req.body.orderInformation) {
+  } else {
       try {
         res.status(200).send(await ourOrders.findOneAndUpdate({ _id : req.body._id },
         {
@@ -60,11 +59,3 @@ function uid(len){
 
   return Arr.join('');
 };
-
-function date() {
-  var d = new Date();    
-  d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
-  var yyyymmdd = t.toISOString().slice(0,0); 
-  console.log(yyyymmdd)
-  return yyyymmdd;
-}
