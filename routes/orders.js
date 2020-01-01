@@ -65,5 +65,6 @@ function date() {
   var d = new Date();    
   d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
   var yyyymmdd = t.toISOString().slice(0,0); 
+  console.log(yyyymmdd)
   return yyyymmdd;
 }
