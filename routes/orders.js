@@ -18,6 +18,7 @@ module.exports.post = async(req, res) => {
       orderInformation: req.body,
       code: uid(6),
       status: 0,
+      date: date(),
     }
     let resp = await ourOrders.create(theOrder);
     res.status(200).send(resp);
@@ -59,3 +60,10 @@ function uid(len){
 
   return Arr.join('');
 };
+
+function date() {
+  var d = new Date();    
+  d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+  var yyyymmdd = t.toISOString().slice(0,0); 
+  return yyyymmdd;
+}
