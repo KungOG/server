@@ -14,8 +14,10 @@ module.exports.get = async(req, res) => {
   
 module.exports.post = async(req, res) => {
   try {
+    console.log(req.body);
     let theOrder = {
-      orderInformation: req.body,
+      orderInformation: req.body.order,
+      comment: req.body.comment,
       code: uid(6),
       status: 0,
     }
