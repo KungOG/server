@@ -9,6 +9,6 @@ let allOrderSchema = new Schema({
   code: String
 })
 
-let AllOrder = mongoose.model('order', allOrderSchema);
+let AllOrder = mongoose.model('orders', allOrderSchema);
 
 module.exports = AllOrder;
