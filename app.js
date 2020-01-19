@@ -87,6 +87,9 @@ app.route('/addons')
   .post(addons.post)
   .get(addons.get);
 
+app.route('/allOrders')
+  .get(checkJwt, allOrders.get);
+
 app.post("/create-payment-intent", async (req, res) => {
   const { items, currency } = req.body;
   // Create a PaymentIntent with the order amount and currency
