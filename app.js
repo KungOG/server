@@ -1,11 +1,12 @@
-
-const express = require('express');
+const express = require("express");
 const app = express();
-const mongoose = require('mongoose');
-const cors = require('cors');
+const mongoose = require("mongoose");
+const cors = require("cors");
 const env = require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY || process.env.STRIPE_PUBLISHABLE_KEY);
-const jwt = require('express-jwt');
+const stripe = require("stripe")(
+  process.env.STRIPE_SECRET_KEY || process.env.STRIPE_PUBLISHABLE_KEY
+);
+const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const authConfig = {
   domain: "dev-6foilwku.auth0.com",
@@ -26,14 +27,17 @@ app.use(
   })
 );
 
-mongoose.connect(process.env.MONGODB_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true })	
-  .then(() => {	
-    console.info('Connected.')	
-  })	
-  .catch(err => {	
-    console.error(err)	
-});
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.info("Connected.");
+  })
+  .catch(err => {
+    console.error(err);
+  });
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
@@ -47,43 +51,47 @@ const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 
-let categories = require('./routes/categories');
-let orders = require('./routes/orders');
-let products = require('./routes/products');
-let business_hours = require('./routes/businessHours');
-let business_status = require('./routes/statuses');
-let delivering_time = require('./routes/deliveryTimes');
-let addons = require('./routes/addons');
+let categories = require("./routes/categories");
+let orders = require("./routes/orders");
+let products = require("./routes/products");
+let business_hours = require("./routes/businessHours");
+let business_status = require("./routes/statuses");
+let delivering_time = require("./routes/deliveryTimes");
+let addons = require("./routes/addons");
 
-app.route('/products/:id')
-  .delete(checkJwt, products.delete);
+app.route("/products/:id").delete(checkJwt, products.delete);
 
-app.route('/products')
+app
+  .route("/products")
   .get(products.get)
   .post(products.post)
   .patch(products.patch);
 
-app.route('/businessHours')
+app
+  .route("/businessHours")
   .get(business_hours.get)
   .patch(checkJwt, business_hours.patch);
 
-app.route('/deliveryTimes')
+app
+  .route("/deliveryTimes")
   .get(delivering_time.get)
   .patch(checkJwt, delivering_time.patch);
 
-app.route('/statuses')
+app
+  .route("/statuses")
   .get(business_status.get)
   .patch(checkJwt, business_status.patch);
 
-app.route('/orders')
+app
+  .route("/orders")
   .post(orders.post)
   .patch(checkJwt, orders.patch)
   .get(checkJwt, orders.get);
 
-app.route('/categories')
-  .get(categories.get);
+app.route("/categories").get(categories.get);
 
-app.route('/addons')
+app
+  .route("/addons")
   .post(addons.post)
   .get(addons.get);
 
@@ -102,13 +110,25 @@ app.post("/create-payment-intent", async (req, res) => {
   });
 });
 
-
 const calculateOrderAmount = items => {
+  let ourProducts = require("./models/product");
+
+  app.get = async (req, res) => {
+    try {
+      await items.forEach(function(entry) {
+        ourProducts.find(entry);
+        console.log(entry);
+      });
+      console.log(items);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
-  
-  return 1200;
-}
+  console.log("CalculateOrder", items);
+  return items;
+};
 
 // Expose a endpoint as a webhook handler for asynchronous events.
 // Configure your webhook in the stripe developer dashboard
@@ -151,4 +171,6 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(process.env.PORT, () => console.log(`Listening on ${ process.env.PORT }`));
+app.listen(process.env.PORT, () =>
+  console.log(`Listening on ${process.env.PORT}`)
+);
