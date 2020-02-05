@@ -58,6 +58,7 @@ let business_hours = require("./routes/businessHours");
 let business_status = require("./routes/statuses");
 let delivering_time = require("./routes/deliveryTimes");
 let addons = require("./routes/addons");
+let allOrders = require("./routes/allOrders");
 
 app.route("/products/:id").delete(checkJwt, products.delete);
 
@@ -94,6 +95,8 @@ app
   .route("/addons")
   .post(addons.post)
   .get(addons.get);
+
+app.route("/allOrders").get(checkJwt, allOrders.get);
 
 app.post("/create-payment-intent", async (req, res) => {
   const { items, currency } = req.body;
