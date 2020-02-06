@@ -115,22 +115,26 @@ app.post("/create-payment-intent", async (req, res) => {
 
 const calculateOrderAmount = items => {
   let ourProducts = require("./models/product");
-
+  
   app.get = async (req, res) => {
     try {
-      await items.forEach(function(entry) {
-        ourProducts.find(entry);
-        console.log(entry);
-      });
-      console.log(items);
+      let products = await ourProducts.find({});
+      let totalPrice = [];
+
+      for (let i = 0; i < items.length; i++) {
+        for (let j = 0; j < products.length; j++) {
+          if(products[j]._id.toString() === items[i]._id) {
+            totalPrice.push(products[j].price)
+          }
+        }
+      }
+      totalPrice = totalPrice.reduce((total, num) => total + num) * 10;
+      console.log(totalPrice)
     } catch (err) {
-      console.log(err);
+      console.error('Error i rad 134 --> ', err);
     }
-  };
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  console.log("CalculateOrder", items);
-  return items;
+  }; 
+  return totalPrice;
 };
 
 // Expose a endpoint as a webhook handler for asynchronous events.
