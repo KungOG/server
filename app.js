@@ -123,7 +123,7 @@ const calculateOrderAmount = items => {
 
       for (let i = 0; i < items.length; i++) {
         for (let j = 0; j < products.length; j++) {
-          if(products[j]._id.toString() === items[i]._id) {
+          if(products[j]._id.toString() === items[i]) {
             totalPrice.push(products[j].price)
           }
         }
