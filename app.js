@@ -101,8 +101,9 @@ app.route("/allOrders").get(checkJwt, allOrders.get);
 app.post("/create-payment-intent", async (req, res) => {
   const { items, currency } = req.body;
   // Create a PaymentIntent with the order amount and currency
+  let totalSum = await calculateOrderAmount(items)
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
+    amount: totalSum,
     currency: currency
   });
 
@@ -113,29 +114,24 @@ app.post("/create-payment-intent", async (req, res) => {
   });
 });
 
-const calculateOrderAmount = items => {
+const calculateOrderAmount = async items => {
   let ourProducts = require("./models/product");
-  
-  app.get = async (req, res) => {
+
     try {
       let products = await ourProducts.find({});
-      let totalPrice = [];
+      let ourProductIds = products.map(product => {
+        return product._id.toString();
+      });
+      let totalPrice = await items.reduce((acc, item) => {
+        let arrPos = ourProductIds.indexOf(item);
+        return arrPos > -1 ? acc + products[arrPos].price : acc;
+      }, 0) * 10;
+      return totalPrice;
 
-      for (let i = 0; i < items.length; i++) {
-        for (let j = 0; j < products.length; j++) {
-          if(products[j]._id.toString() === items[i]) {
-            totalPrice.push(products[j].price)
-          }
-        }
-      }
-      totalPrice = totalPrice.reduce((total, num) => total + num) * 10;
-      console.log(totalPrice)
     } catch (err) {
-      console.error('Error i rad 134 --> ', err);
+      console.log("Error i rad 134 --> ", err);
     }
-  }; 
-  return totalPrice;
-};
+}; 
 
 // Expose a endpoint as a webhook handler for asynchronous events.
 // Configure your webhook in the stripe developer dashboard
