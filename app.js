@@ -116,15 +116,18 @@ app.post("/create-payment-intent", async (req, res) => {
 
 const calculateOrderAmount = async items => {
   let ourProducts = require("./models/product");
+  let addon = require("./models/addon");
 
     try {
       let products = await ourProducts.find({});
-      let ourProductIds = products.map(product => {
+      let addons = await addon.find({});
+      let arr = [...products, ...addons];
+      let ourProductIds = arr.map(product => {
         return product._id.toString();
       });
       let totalPrice = await items.reduce((acc, item) => {
         let arrPos = ourProductIds.indexOf(item);
-        return arrPos > -1 ? acc + products[arrPos].price : acc;
+        return arrPos > -1 ? acc + arr[arrPos].price : acc;
       }, 0) * 10;
       return totalPrice;
 
