@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+var nodemailer = require('nodemailer');
 const mongoose = require("mongoose");
 const cors = require("cors");
 const env = require("dotenv").config();
@@ -100,14 +101,13 @@ app.route("/allOrders").get(checkJwt, allOrders.get);
 
 app.post("/create-payment-intent", async (req, res) => {
   const { items, currency } = req.body;
-  // Create a PaymentIntent with the order amount and currency
   let totalSum = await calculateOrderAmount(items)
   const paymentIntent = await stripe.paymentIntents.create({
     amount: totalSum,
-    currency: currency
+    currency: currency,
+    metadata: {email: "sandra@queenslab.se"}
   });
 
-  // Send publishable key and PaymentIntent details to client
   res.send({
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     clientSecret: paymentIntent.client_secret
@@ -136,15 +136,10 @@ const calculateOrderAmount = async items => {
     }
 }; 
 
-// Expose a endpoint as a webhook handler for asynchronous events.
-// Configure your webhook in the stripe developer dashboard
-// https://dashboard.stripe.com/test/webhooks
 app.post("/webhook", async (req, res) => {
   let data, eventType;
 
-  // Check if webhook signing is configured.
   if (process.env.STRIPE_WEBHOOK_SECRET) {
-    // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
     let signature = req.headers["stripe-signature"];
     try {
@@ -160,16 +155,34 @@ app.post("/webhook", async (req, res) => {
     data = event.data;
     eventType = event.type;
   } else {
-    // Webhook signing is recommended, but if the secret is not configured in `config.js`,
-    // we can retrieve the event data directly from the request body.
-    data = req.body.data;
+    data = req.body.data.metadata.email;
     eventType = req.body.type;
   }
-
   if (eventType === "payment_intent.succeeded") {
-    // Funds have been captured
-    // Fulfill any orders, e-mail receipts, etc
-    // To cancel the payment after capture you will need to issue a Refund (https://stripe.com/docs/api/refunds)
+
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'otterstensandra@gmail.com',
+        pass: '0JKTUgsp'
+      }
+    });
+    
+    var mailOptions = {
+      from: 'otterstensandra@gmail.com',
+      to: data,
+      subject: 'Thai Corner Kvitto',
+      text: 'Du har käkat för 598:-'
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
     console.log("💰 Payment captured!");
   } else if (eventType === "payment_intent.payment_failed") {
     console.log("❌ Payment failed.");
@@ -177,6 +190,9 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
+
 app.listen(process.env.PORT, () =>
   console.log(`Listening on ${process.env.PORT}`)
 );
+
+
