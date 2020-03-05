@@ -155,7 +155,7 @@ app.post("/webhook", async (req, res) => {
     data = event.data;
     eventType = event.type;
   } else {
-    data = req.body.data.metadata.email;
+    data = req.body.data;
     eventType = req.body.type;
   }
   if (eventType === "payment_intent.succeeded") {
@@ -163,13 +163,13 @@ app.post("/webhook", async (req, res) => {
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'otterstensandra@gmail.com',
-        pass: '0JKTUgsp'
+        user: 'thaicornermellby@gmail.com',
+        pass: 'ThaiMellby2020'
       }
     });
     
     var mailOptions = {
-      from: 'otterstensandra@gmail.com',
+      from: 'thaicornermellby@gmail.com',
       to: 'sandra@queenslab.se',
       subject: 'Thai Corner Kvitto',
       text: 'Du har käkat för 598:-'
