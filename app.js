@@ -170,7 +170,7 @@ app.post("/webhook", async (req, res) => {
     
     var mailOptions = {
       from: 'otterstensandra@gmail.com',
-      to: data,
+      to: 'sandra@queenslab.se',
       subject: 'Thai Corner Kvitto',
       text: 'Du har käkat för 598:-'
     };
