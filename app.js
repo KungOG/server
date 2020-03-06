@@ -128,7 +128,7 @@ const calculateOrderAmount = async items => {
       let totalPrice = await items.reduce((acc, item) => {
         let arrPos = ourProductIds.indexOf(item);
         return arrPos > -1 ? acc + arr[arrPos].price : acc;
-      }, 0) * 10;
+      }, 0);
       return totalPrice;
 
     } catch (err) {
