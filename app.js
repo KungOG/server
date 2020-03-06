@@ -163,14 +163,14 @@ app.post("/webhook", async (req, res) => {
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: data.object.metadata.email,
+        user: 'thaicornermellby@gmail.com',
         pass: 'ThaiMellby2020'
       }
     });
     
     var mailOptions = {
       from: 'thaicornermellby@gmail.com',
-      to: 'sandra@queenslab.se',
+      to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
       text: 'Du har käkat för' + data.object.amount
     };
