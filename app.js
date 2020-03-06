@@ -100,12 +100,12 @@ app
 app.route("/allOrders").get(checkJwt, allOrders.get);
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { items, currency } = req.body;
+  const { items, currency, email } = req.body;
   let totalSum = await calculateOrderAmount(items)
   const paymentIntent = await stripe.paymentIntents.create({
     amount: totalSum,
     currency: currency,
-    metadata: {email: "sandra@queenslab.se"}
+    metadata: {email: email}
   });
 
   res.send({
