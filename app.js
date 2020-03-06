@@ -170,9 +170,9 @@ app.post("/webhook", async (req, res) => {
     
     var mailOptions = {
       from: 'thaicornermellby@gmail.com',
-      to: 'sandra@queenslab.se',
+      to: data.metadata.email,
       subject: 'Thai Corner Kvitto',
-      text: 'Du har käkat för 598:-'
+      text: 'Du har käkat för' + data.amount
     };
     
     transporter.sendMail(mailOptions, function(error, info){
