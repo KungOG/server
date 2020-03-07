@@ -112,7 +112,8 @@ app.post("/create-payment-intent", async (req, res) => {
 
   res.send({
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-    clientSecret: paymentIntent.client_secret
+    clientSecret: paymentIntent.client_secret,
+    amount: totalSum
   });
 });
 
