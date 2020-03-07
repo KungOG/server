@@ -18,7 +18,7 @@ module.exports.post = async(req, res) => {
     let theOrder = {
       orderInformation: req.body.order,
       comment: req.body.comment,
-      code: uid(6),
+      code: req.body.ordernumber,
       status: 0,
     }
     let resp = await ourOrders.create(theOrder);
@@ -49,15 +49,4 @@ module.exports.patch = async (req, res) => {
       }
 
   }
-};
-
-function uid(len){
-  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-  let Arr = [];
-
-  for(let i=0; i<len; i++){
-    Arr.push(chars[Math.floor(Math.random()*chars.length)]);
-  }
-
-  return Arr.join('');
 };
