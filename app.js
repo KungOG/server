@@ -22,7 +22,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-//app.use(express.static(process.env.STATIC_DIR));
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
@@ -107,12 +106,12 @@ app
 app.route("/allOrders").get(checkJwt, allOrders.get);
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { items, currency, email } = req.body;
+  const { items, currency, email, ordernumber } = req.body;
   let totalSum = await calculateOrderAmount(items)
   const paymentIntent = await stripe.paymentIntents.create({
     amount: totalSum,
     currency: currency,
-    metadata: {email: email}
+    metadata: {email: email, ordernumber: ordernumber}
   });
 
   res.send({
@@ -179,7 +178,7 @@ app.post("/webhook", async (req, res) => {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      text: 'Du har käkat för' + data.object.amount
+      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.email
     };
     
     transporter.sendMail(mailOptions, function(error, info){
