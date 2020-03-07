@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 var nodemailer = require('nodemailer');
 const mongoose = require("mongoose");
-const cors = require("cors");
-const env = require("dotenv").config();
 const stripe = require("stripe")(
   process.env.STRIPE_SECRET_KEY || process.env.STRIPE_PUBLISHABLE_KEY
 );
@@ -24,8 +22,6 @@ app.use(function(req, res, next) {
 
 app.use(
   express.json({
-    // We need the raw body to verify webhook signatures.
-    // Let's compute it only when hitting the Stripe webhook endpoint.
     verify: function(req, res, buf) {
       if (req.originalUrl.startsWith("/webhook")) {
         req.rawBody = buf.toString();
@@ -178,7 +174,7 @@ app.post("/webhook", async (req, res) => {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.email
+      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.ordernumber
     };
     
     transporter.sendMail(mailOptions, function(error, info){
