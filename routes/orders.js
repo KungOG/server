@@ -19,6 +19,7 @@ module.exports.post = async(req, res) => {
       orderInformation: req.body.order,
       comment: req.body.comment,
       code: req.body.ordernumber,
+      amount: req.body.amount,
       status: 0,
     }
     let resp = await ourOrders.create(theOrder);

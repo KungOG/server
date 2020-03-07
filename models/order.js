@@ -5,6 +5,7 @@ let ourOrderSchema = new Schema({
   orderInformation: Object,
   comment: String,
   status: Number,
+  amount: Number,
   date: {type: Date, default: Date.now},
   code: String
 })
