@@ -140,7 +140,7 @@ const calculateOrderAmount = async items => {
     }
 }; 
 
-const orderItems = async items => {
+/* const orderItems = async items => {
   let ourProducts = require("./models/product");
   let addon = require("./models/addon");
   let itemIds = items
@@ -165,10 +165,10 @@ const orderItems = async items => {
   } catch (err) {
     console.log("Error i rad 134 --> ", err);
   }
-};
+}; */
 
 app.post("/webhook", async (req, res) => {
-  let data, eventType, orderObjects;
+  let data, eventType;
 
   if (process.env.STRIPE_WEBHOOK_SECRET) {
     let event;
@@ -188,10 +188,8 @@ app.post("/webhook", async (req, res) => {
   } else {
     data = req.body.data;
     eventType = req.body.type;
-    orderObjects = await orderItems(data.object.metadata)
   }
   if (eventType === "payment_intent.succeeded") {
-    console.log('dhkdhakdadjh')
 
     var transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -206,7 +204,7 @@ app.post("/webhook", async (req, res) => {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.ordernumber + orderObjects[0].productName
+      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.ordernumber
     };
     
     transporter.sendMail(mailOptions, function(error, info){
