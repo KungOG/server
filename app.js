@@ -143,6 +143,10 @@ const calculateOrderAmount = async items => {
 const orderItems = async items => {
   let ourProducts = require("./models/product");
   let addon = require("./models/addon");
+  let itemIds = items
+  delete itemIds.email
+  delete itemIds.ordernumber
+  Object.values(itemIds)
 
   try {
     let products = await ourProducts.find({});
@@ -151,7 +155,7 @@ const orderItems = async items => {
     let ourProductIds = arr.map(product => {
       return product._id.toString();
     });
-    let allItems = await items.map((item) => {
+    let allItems = await itemIds.map((item) => {
       let arrPos = ourProductIds.indexOf(item);
       return {productName: arr[arrPos].name, price: arr[arrPos].price};
     })
@@ -184,9 +188,10 @@ app.post("/webhook", async (req, res) => {
   } else {
     data = req.body.data;
     eventType = req.body.type;
-    console.log(data.object)
+    let orderObjects = await orderItems(data.object.metadata)
   }
   if (eventType === "payment_intent.succeeded") {
+    console.log('dhkdhakdadjh')
 
     var transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -195,12 +200,13 @@ app.post("/webhook", async (req, res) => {
         pass: 'ThaiMellby2020'
       }
     });
+
     
     var mailOptions = {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.ordernumber
+      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.ordernumber + orderObjects[0].productName
     };
     
     transporter.sendMail(mailOptions, function(error, info){
