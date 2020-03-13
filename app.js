@@ -168,7 +168,7 @@ const orderItems = async items => {
 };
 
 app.post("/webhook", async (req, res) => {
-  let data, eventType;
+  let data, eventType, orderObjects;
 
   if (process.env.STRIPE_WEBHOOK_SECRET) {
     let event;
@@ -188,7 +188,7 @@ app.post("/webhook", async (req, res) => {
   } else {
     data = req.body.data;
     eventType = req.body.type;
-    let orderObjects = await orderItems(data.object.metadata)
+    orderObjects = await orderItems(data.object.metadata)
   }
   if (eventType === "payment_intent.succeeded") {
     console.log('dhkdhakdadjh')
