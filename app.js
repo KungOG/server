@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 var nodemailer = require('nodemailer');
+const env = require("dotenv").config();
 const mongoose = require("mongoose");
 const stripe = require("stripe")(
   process.env.STRIPE_SECRET_KEY || process.env.STRIPE_PUBLISHABLE_KEY
@@ -107,7 +108,7 @@ app.post("/create-payment-intent", async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: totalSum,
     currency: currency,
-    metadata: {email: email, ordernumber: ordernumber}
+    metadata: {email: email, ordernumber: ordernumber, ...items}
   });
 
   res.send({
@@ -139,6 +140,29 @@ const calculateOrderAmount = async items => {
     }
 }; 
 
+const orderItems = async items => {
+  let ourProducts = require("./models/product");
+  let addon = require("./models/addon");
+
+  try {
+    let products = await ourProducts.find({});
+    let addons = await addon.find({});
+    let arr = [...products, ...addons];
+    let ourProductIds = arr.map(product => {
+      return product._id.toString();
+    });
+    let allItems = await items.map((item) => {
+      let arrPos = ourProductIds.indexOf(item);
+      return {productName: arr[arrPos].name, price: arr[arrPos].price};
+    })
+    console.log(allItems)
+    return allItems;
+
+  } catch (err) {
+    console.log("Error i rad 134 --> ", err);
+  }
+};
+
 app.post("/webhook", async (req, res) => {
   let data, eventType;
 
@@ -160,6 +184,7 @@ app.post("/webhook", async (req, res) => {
   } else {
     data = req.body.data;
     eventType = req.body.type;
+    console.log(data.object)
   }
   if (eventType === "payment_intent.succeeded") {
 
