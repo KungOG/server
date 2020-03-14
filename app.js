@@ -209,8 +209,7 @@ app.post("/webhook", async (req, res) => {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      html: '<div><table><thead><tr><th>Produkt</th><th>Pris</th></tr></thead><tbody>' + content + '</tbody></table></div>'
-      /* text: 'Du har käkat för' + data.object.amount + ' och ditt ordernummer är ' + data.object.metadata.ordernumber + ' pris ' + orderObjects[0].price */
+      html: '<div><table><thead><tr><th>' + 'Ordernummer: ' + data.object.metadata.ordernumber + '</th></tr></thead><tbody>' + content + '</tbody><tfoot><tr><td>' + 'Totalsumma: ' + data.object.amount + '</td></tr></tfoot></table></div>'
     };
     
     transporter.sendMail(mailOptions, function(error, info){
