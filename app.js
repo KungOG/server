@@ -140,13 +140,13 @@ const calculateOrderAmount = async items => {
     }
 }; 
 
-/* const orderItems = async items => {
+const orderItems = async items => {
   let ourProducts = require("./models/product");
   let addon = require("./models/addon");
-  let itemIds = items
-  delete itemIds.email
-  delete itemIds.ordernumber
-  Object.values(itemIds)
+  let itemIds = {...items};
+  delete itemIds.email;
+  delete itemIds.ordernumber;
+  itemIds = Object.values(itemIds);
 
   try {
     let products = await ourProducts.find({});
@@ -157,18 +157,18 @@ const calculateOrderAmount = async items => {
     });
     let allItems = await itemIds.map((item) => {
       let arrPos = ourProductIds.indexOf(item);
-      return {productName: arr[arrPos].name, price: arr[arrPos].price};
+      return {productName: arr[arrPos].productName, price: arr[arrPos].price};
     })
     console.log(allItems)
     return allItems;
 
   } catch (err) {
-    console.log("Error i rad 134 --> ", err);
+    console.log("Error i orderItems --> ", err);
   }
-}; */
+};
 
 app.post("/webhook", async (req, res) => {
-  let data, eventType;
+  let data, eventType, orderObjects;
 
   if (process.env.STRIPE_WEBHOOK_SECRET) {
     let event;
@@ -188,8 +188,14 @@ app.post("/webhook", async (req, res) => {
   } else {
     data = req.body.data;
     eventType = req.body.type;
+    orderObjects = await orderItems(data.object.metadata)
+    console.log(orderObjects)
   }
   if (eventType === "payment_intent.succeeded") {
+
+    var content = orderObjects.reduce(function(a, b) {
+      return a + '<tr><td>' + b.productName + '</td><td>' + b.price + '</td><td>';
+    }, '');
 
     var transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -199,17 +205,17 @@ app.post("/webhook", async (req, res) => {
       }
     });
 
-    
     var mailOptions = {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      text: 'Du har käkat för' + data.object.amount + 'och ditt ordernummer är' + data.object.metadata.ordernumber
+      html: '<div><table><thead><tr><th>Produkt</th><th>Pris</th></tr></thead><tbody>' + content + '</tbody></table></div>'
+      /* text: 'Du har käkat för' + data.object.amount + ' och ditt ordernummer är ' + data.object.metadata.ordernumber + ' pris ' + orderObjects[0].price */
     };
     
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
-        console.log(error);
+        console.log('mailerror --->' + error);
       } else {
         console.log('Email sent: ' + info.response);
       }
