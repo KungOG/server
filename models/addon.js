@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let menuAddonsSchema = new Schema({
-  name: String,
+  productName: String,
   price: Number,
 });
 

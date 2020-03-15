@@ -12,7 +12,7 @@ module.exports.get = async(req, res) => {
 module.exports.post = async(req, res) => {
   try {
     let theAddon = {
-      name: req.body.name,
+      productName: req.body.productName,
       price: req.body.price,
     }
     let resp = await Addons.create(theAddon);
