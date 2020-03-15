@@ -5,39 +5,57 @@
   <meta name="viewport" content="width=h1, initial-scale=1.0">
   <title>Document</title>
   <style>
-    h1 {
-      color: red;
-    }
+    h1 {color: red;}
+    tbody {margin-top: 20px;}
+    thead {margin: 50px 0;}
+    tfoot {padding: 100px 0;}
+    .right {text-align: right;}
+    .bold {font-weight: bold;}
+    .nopadding {padding: 0;}
+    .paddingtoplarge {padding: 50px 0 0 0;}
+    .paddingtopsmall {padding: 20px 0 0 0;}
+    td {padding: 5px 0;}
   </style>
 </head>
 <body>
-  <h1>Tack för din beställning. </h1>
+  <h3>Tack för din beställning. </h3>
   <div>
     <table>
       <thead>
         <tr>
-          <th>
+          <td class="bold">
             Ordernummer: {{ordernumber}}
-          </th>
+          </td>
         </tr>
       </thead>
       <tbody>
         {{#each orderdetails}}
-        <tr><td>{{this.productName}}</td><td>{{this.price}}:-</td><tr>
+        <tr>
+          <td>{{this.productName}}</td>
+          <td class="right">{{this.price}}:-</td>
+        <tr>
         {{/each}}
+        <tr>
+          <td class="bold paddingtopsmall">Totalsumma:</td>
+          <td class="right bold paddingtopsmall">{{amount}}:-</td>
+        </tr>
+        <tr>
+          <td class="nopadding">Varav moms (12%):</td>
+          <td class="right nopadding">{{moms}}:-</td>
+        </tr>
       </tbody>
       <tfoot>
         <tr>
-          <td>
-            Totalsumma: {{amount}} :-
-          </td>
+          <td class="paddingtoplarge">Thai Corner Restaurang</td>
         </tr>
-        <tr>
-          <td>
-            Varav moms (12%): {{moms}} :-
-          </td>
+        <tr> 
+          <td class="nopadding">Kustvägen 46, Mellbystand</td>
+        </tr> 
+        <tr>  
+          <td class="nopadding">+46 430 28300</td>
         </tr>
       </tfoot>
+      <hr>
     </table>
   </div>
 </body>

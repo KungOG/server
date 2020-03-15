@@ -194,7 +194,7 @@ app.post("/webhook", async (req, res) => {
   }
   if (eventType === "payment_intent.succeeded") {
 
-    const moms = (data.object.amount / 10) * 0.12;
+    const moms = Math.round((data.object.amount / 10) * 0.12 * 100) / 100;
 
     let transporter = nodemailer.createTransport({
       service: 'gmail',
