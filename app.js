@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 var nodemailer = require('nodemailer');
 const env = require("dotenv").config();
+const path = require("path");
+const hbs = require('nodemailer-handlebars');
 const mongoose = require("mongoose");
 const stripe = require("stripe")(
   process.env.STRIPE_SECRET_KEY || process.env.STRIPE_PUBLISHABLE_KEY
@@ -197,7 +199,9 @@ app.post("/webhook", async (req, res) => {
       return a + '<tr><td>' + b.productName + '</td><td>' + b.price + '</td><td>';
     }, '');
 
-    var transporter = nodemailer.createTransport({
+    console.log(__dirname)
+
+    let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'thaicornermellby@gmail.com',
@@ -205,11 +209,22 @@ app.post("/webhook", async (req, res) => {
       }
     });
 
-    var mailOptions = {
+    transporter.use("compile",hbs({
+      viewEngine:{
+        partialsDir: path.join(__dirname, '/views'),
+        defaultLayout:""
+      },
+      viewPath: path.join(__dirname, '/views'),
+      extName:".handlebars"
+    }));
+
+
+    let mailOptions = {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      html: '<div><table><thead><tr><th>' + 'Ordernummer: ' + data.object.metadata.ordernumber + '</th></tr></thead><tbody>' + content + '</tbody><tfoot><tr><td>' + 'Totalsumma: ' + data.object.amount + '</td></tr></tfoot></table></div>'
+      template: 'index'
+      /* html: '<div><table><thead><tr><th>' + 'Ordernummer: ' + data.object.metadata.ordernumber + '</th></tr></thead><tbody>' + content + '</tbody><tfoot><tr><td>' + 'Totalsumma: ' + data.object.amount + '</td></tr></tfoot></table></div>' */
     };
     
     transporter.sendMail(mailOptions, function(error, info){
