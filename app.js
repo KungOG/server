@@ -191,15 +191,10 @@ app.post("/webhook", async (req, res) => {
     data = req.body.data;
     eventType = req.body.type;
     orderObjects = await orderItems(data.object.metadata)
-    console.log(orderObjects)
   }
   if (eventType === "payment_intent.succeeded") {
 
-    var content = orderObjects.reduce(function(a, b) {
-      return a + '<tr><td>' + b.productName + '</td><td>' + b.price + '</td><td>';
-    }, '');
-
-    console.log(__dirname)
+    const moms = (data.object.amount / 10) * 0.12;
 
     let transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -218,13 +213,17 @@ app.post("/webhook", async (req, res) => {
       extName:".handlebars"
     }));
 
-
     let mailOptions = {
       from: 'thaicornermellby@gmail.com',
       to: data.object.metadata.email,
       subject: 'Thai Corner Kvitto',
-      template: 'index'
-      /* html: '<div><table><thead><tr><th>' + 'Ordernummer: ' + data.object.metadata.ordernumber + '</th></tr></thead><tbody>' + content + '</tbody><tfoot><tr><td>' + 'Totalsumma: ' + data.object.amount + '</td></tr></tfoot></table></div>' */
+      template: 'index',
+      context: {
+        ordernumber : data.object.metadata.ordernumber,
+        amount: data.object.amount / 10,
+        moms: moms,
+        orderdetails: orderObjects
+      }
     };
     
     transporter.sendMail(mailOptions, function(error, info){
@@ -242,9 +241,6 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-
 app.listen(process.env.PORT, () =>
   console.log(`Listening on ${process.env.PORT}`)
 );
-
-

@@ -4,8 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=h1, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    h1 {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hej på dig!</h1>
+  <h1>Tack för din beställning. </h1>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            Ordernummer: {{ordernumber}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orderdetails}}
+        <tr><td>{{this.productName}}</td><td>{{this.price}}:-</td><tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>
+            Totalsumma: {{amount}} :-
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Varav moms (12%): {{moms}} :-
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </body>
 </html>
