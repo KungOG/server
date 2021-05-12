@@ -17,7 +17,7 @@
     "express-jwt": "^5.3.1",
     "jwks-rsa": "^1.6.0",
     "mongoose": "^5.4.12",
-    "nodemailer": "^6.4.4",
+    "nodemailer": "^6.4.16",
     "nodemailer-handlebars": "^1.0.1",
     "stripe": "^7.14.0"
   }
